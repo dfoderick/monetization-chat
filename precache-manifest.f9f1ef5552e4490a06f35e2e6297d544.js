@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "dc621b27e5b7beb2ed7817014addae1e",
+    "revision": "655e4bacd4fa6c22ac9c3c238e9fe0d3",
     "url": "/money-chat/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/money-chat/static/css/2.03492def.chunk.css"
   },
   {
-    "revision": "e18065219f8ac0752ab8",
+    "revision": "e99d40e977724069fbfc",
     "url": "/money-chat/static/css/main.232264c9.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/money-chat/static/js/2.95897ed5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e18065219f8ac0752ab8",
-    "url": "/money-chat/static/js/main.cbbb38d2.chunk.js"
+    "revision": "e99d40e977724069fbfc",
+    "url": "/money-chat/static/js/main.194c34d0.chunk.js"
   },
   {
     "revision": "d0dccd3357bd0bba01ba",
