@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/money-chat/static/css/main.232264c9.chunk.css",
+    "main.js": "/money-chat/static/js/main.cbbb38d2.chunk.js",
+    "main.js.map": "/money-chat/static/js/main.cbbb38d2.chunk.js.map",
+    "runtime-main.js": "/money-chat/static/js/runtime-main.b2ce6274.js",
+    "runtime-main.js.map": "/money-chat/static/js/runtime-main.b2ce6274.js.map",
+    "static/css/2.03492def.chunk.css": "/money-chat/static/css/2.03492def.chunk.css",
+    "static/js/2.95897ed5.chunk.js": "/money-chat/static/js/2.95897ed5.chunk.js",
+    "static/js/2.95897ed5.chunk.js.map": "/money-chat/static/js/2.95897ed5.chunk.js.map",
+    "index.html": "/money-chat/index.html",
+    "precache-manifest.39404a9adce9244e223cd99bda243263.js": "/money-chat/precache-manifest.39404a9adce9244e223cd99bda243263.js",
+    "service-worker.js": "/money-chat/service-worker.js",
+    "static/css/2.03492def.chunk.css.map": "/money-chat/static/css/2.03492def.chunk.css.map",
+    "static/css/main.232264c9.chunk.css.map": "/money-chat/static/css/main.232264c9.chunk.css.map",
+    "static/js/2.95897ed5.chunk.js.LICENSE.txt": "/money-chat/static/js/2.95897ed5.chunk.js.LICENSE.txt",
+    "static/media/avatar.png": "/money-chat/static/media/avatar.315cf354.png",
+    "static/media/semantic.min.css": "/money-chat/static/media/outline-icons.ef60a4f6.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b2ce6274.js",
+    "static/css/2.03492def.chunk.css",
+    "static/js/2.95897ed5.chunk.js",
+    "static/css/main.232264c9.chunk.css",
+    "static/js/main.cbbb38d2.chunk.js"
+  ]
+}
