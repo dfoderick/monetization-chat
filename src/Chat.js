@@ -20,13 +20,9 @@ import MessageBox from "./MessageBox";
 import Paho from "paho-mqtt"
 import MonetizationOff from './MonetizationOff'
 
-// Use for remote connections
-const configuration = {
-  iceServers: [{ url: "stun:stun.1.google.com:19302" }]
-};
-
+const platformPointer = "$coil.xrptipbot.com/da75ae04-5c0c-4662-8ce6-5470a4127d97"
 // Use for local connections
-// const configuration = null;
+const configuration = null;
 
 const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const [socketOpen, setSocketOpen] = useState(false);
@@ -320,8 +316,12 @@ function onMessageArrived(message) {
       // });
   }
 
+  const payTo = (pointer) => {
+    document.querySelector('meta[name="monetization"]').setAttribute("content", pointer)
+    console.log(`Now paying to ${pointer}`)
+}
+
   //when a peer answers our offer
-  // was { answer }
   const onAnswer = (answer) => {
     if (answer.sender === me) {
       console.log(`You accepted the offer. Now connected to ${answer.peer}`)
@@ -333,8 +333,7 @@ function onMessageArrived(message) {
       console.log(`Your offer was accepted. You are now connected to ${answer.sender}`)
       //connection.setRemoteDescription(new RTCSessionDescription(answer))
       if (answer.pointer) {
-        document.querySelector('meta[name="monetization"]').setAttribute("content", answer.pointer)
-        console.log(`Now paying to ${answer.pointer}`)
+        payTo(answer.pointer)
       } else {
         console.error(`${answer.sender} does not have a pointer`)
       }
@@ -425,6 +424,7 @@ function onMessageArrived(message) {
     if (connectedRef.current === userName) {
       setConnecting(true);
       setConnectedTo("");
+      payTo(platformPointer)
       connectedRef.current = "";
       setConnecting(false);
     } else {
