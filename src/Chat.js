@@ -19,6 +19,7 @@ import UsersList from "./UsersList";
 import MessageBox from "./MessageBox";
 import Paho from "paho-mqtt"
 import MonetizationOff from './MonetizationOff'
+import MoneyViewer from "./MoneyViewer";
 
 const platformPointer = "$coil.xrptipbot.com/da75ae04-5c0c-4662-8ce6-5470a4127d97"
 // Use for local connections
@@ -29,7 +30,7 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const [socketMessages, setSocketMessages] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [me, setMe] = useState("");
-  const [paymentPointer, setPaymentPointer] = useState("");
+  const [paymentPointer, setPaymentPointer] = useState(platformPointer);
   const [loggingIn, setLoggingIn] = useState(false);
   const [users, setUsers] = useState([]);
   const [connectedTo, setConnectedTo] = useState("");
@@ -37,7 +38,6 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const [alert, setAlert] = useState(null);
   //const [activeItem, setActiveItem] = useState(null);
   const connectedRef = useRef();
-  //const webSocket = useRef(null);
   const [message, setMessage] = useState("");
   const messagesRef = useRef({});
   const [messages, setMessages] = useState({});
@@ -45,18 +45,6 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const client = useRef(null)
 
   useEffect(() => {
-    // webSocket.current = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-    // webSocket.current.onmessage = message => {
-    //   const data = JSON.parse(message.data);
-    //   setSocketMessages(prev => [...prev, data]);
-    // };
-    // webSocket.current.onclose = () => {
-    //   webSocket.current.close();
-    // };
-    // return () => webSocket.current.close();
-
-    //webSocket.current = new WebSocket('wss://bitcoinofthings.com:8884');
-
     const clientID = "bot-demo-ws-" + parseInt(Math.random() * 100);
     const host = "mqtt.bitcoinofthings.com"
     const port = "8884"
@@ -94,7 +82,6 @@ function onMessageArrived(message) {
   useEffect(() => {
     let data = socketMessages.pop();
     if (data) {
-      console.log("effect data")
       console.log(data)
       switch (data.type) {
         case "connect":
@@ -151,9 +138,6 @@ function onMessageArrived(message) {
   };
 
   const send = data => {
-    //webSocket.current.send(JSON.stringify(data));
-    console.log('sending')
-    console.log(data)
     client.current.publish("demo",JSON.stringify(data))
   }
 
@@ -164,10 +148,6 @@ function onMessageArrived(message) {
 
   const handleLogin = () => {
     setLoggingIn(true);
-    // todo: broker should do login
-    // for now, in demo mode
-    // users should be array of logged in users
-    // back end will need to maintain
     send({ type: "login",
       name: me,
       success: true,
@@ -176,26 +156,22 @@ function onMessageArrived(message) {
     });
   };
 
-  // was { user }
   const updateUsersList = (user) => {
     removeUser(user)
     user.avatar = `https://avatars.dicebear.com/api/human/${user.userName}.svg`
+    user.paidAmount = 0.00
     setUsers(prev => [...prev, user]);
   };
 
-  //was { user }
   const removeUser = (user) => {
     setUsers(prev => prev.filter(u => u.userName !== user.userName));
   }
 
   //message received from user in channel
-  //TODO: refactor messages model
-  // really should be conversations[sender]/messages
   const handleDataChannelMessageReceived = (data) => {
     //todo: group messages are also sent here
     if (!(data.recipient === me || data.sender === me)) return
-    const message = data //JSON.parse(data);
-    //const { name: user } = message
+    const message = data
     const sender = message.sender
     const recipient = message.recipient
     const peer = (sender === me) ? recipient : sender
@@ -203,21 +179,15 @@ function onMessageArrived(message) {
     let conversations = messagesRef.current
     let peerMessages = conversations[peer]
     if (peerMessages) {
-      //load previous conversation with our peer
-      console.log("previous convo")
       peerMessages = [...peerMessages, message]
       let newMessages = Object.assign({}, messages, { [peer]: peerMessages })
       messagesRef.current = newMessages
       setMessages(newMessages)
-      console.log(newMessages)
     } else {
-      // start a new conversation with peer
-      console.log("new convo")
       peerMessages = { [peer]: [message] }
       let newMessages = Object.assign({}, messages, peerMessages)
       messagesRef.current = newMessages
       setMessages(newMessages)
-      console.log(newMessages)
     }
   }
 
@@ -238,22 +208,7 @@ function onMessageArrived(message) {
       setIsLoggedIn(true)
       updateUsersList(loggedIn[0])
 
-      //setup connection to peer
-      //for now this is required. try to replace
-      //can we pass webrtc message over mqtt???
       let localConnection = new RTCPeerConnection(configuration);
-      //when the browser finds an ice candidate we send it to another peer
-      // localConnection.onicecandidate = ({ candidate }) => {
-      //   let connectedTo = connectedRef.current;
-
-      //   if (candidate && !!connectedTo) {
-      //     send({
-      //       name: connectedTo,
-      //       type: "candidate",
-      //       candidate
-      //     });
-      //   }
-      // };
       localConnection.ondatachannel = event => {
         console.log("Data channel is created!");
         let receiveChannel = event.channel;
@@ -280,40 +235,16 @@ function onMessageArrived(message) {
   };
 
   //when somebody wants to connect to us
-  // was { offer, name }
   const onOffer = (offerMessage) => {
     if (offerMessage.peer !== me) return
     setConnectedTo(offerMessage.sender);
     connectedRef.current = offerMessage.sender;
-
-    // connection
-    //   .setRemoteDescription(new RTCSessionDescription(offer))
-    //   .then(() => connection.createAnswer())
-    //   //erroring, not sure what it does
-    //   //.then(answer => connection.setLocalDescription(answer))
-    //   .then(() =>
-        // send answer from us to offer sender
-        send({ type: "answer", 
-          answer: connection.localDescription, 
-          sender: me,
-          pointer: paymentPointer,
-          peer: offerMessage.sender 
-        })
-      // )
-      // .catch(e => {
-      //   console.log({ e });
-      //   setAlert(
-      //     <SweetAlert
-      //       warning
-      //       confirmBtnBsStyle="danger"
-      //       title="Failed"
-      //       onConfirm={closeAlert}
-      //       onCancel={closeAlert}
-      //     >
-      //       There was an error accepting offer.
-      //     </SweetAlert>
-      //   );
-      // });
+    send({ type: "answer", 
+      answer: connection.localDescription, 
+      sender: me,
+      pointer: paymentPointer,
+      peer: offerMessage.sender 
+    })
   }
 
   const payTo = (pointer) => {
@@ -331,7 +262,6 @@ function onMessageArrived(message) {
     }
     if (answer.peer === me) {
       console.log(`Your offer was accepted. You are now connected to ${answer.sender}`)
-      //connection.setRemoteDescription(new RTCSessionDescription(answer))
       if (answer.pointer) {
         payTo(answer.pointer)
       } else {
@@ -340,45 +270,22 @@ function onMessageArrived(message) {
     }
   }
 
-  //when we got ice candidate from another user
   const onCandidate = ({ candidate }) => {
     console.log('we dont do ice candidates')
-    //connection.addIceCandidate(new RTCIceCandidate(candidate));
-  };
+  }
 
   //when a user clicks the send message button
   const sendMsg = () => {
     const time = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx")
-    //let messages = messagesRef.current
     let connectedTo = connectedRef.current
     let messageEntity = { type:"channelMessage", time, message, 
       sender: me, recipient: connectedTo || "group" }
-    //let userMessages = messages[connectedTo]
-    // if (messages[connectedTo]) {
-    //   userMessages = [...userMessages, text]
-    //   let newMessages = Object.assign({}, messages, {
-    //     [connectedTo]: userMessages
-    //   });
-    //   messagesRef.current = newMessages;
-    //   setMessages(newMessages)
-    // } else {
-    //   userMessages = Object.assign({}, messages, { [connectedTo]: [text] });
-    //   messagesRef.current = userMessages
-    //   setMessages(userMessages)
-    // }
-    //just send it to group, ui will filter out messages
-    // not intended for recipient
     send(messageEntity)
     setMessage("")
   };
 
   //connect to a peer with offer
-  //we are sender, peer is person we are trying to connect to
   const handleConnectToPeer = peer => {
-    // var dataChannelOptions = {
-    //   reliable: true
-    // };
-
     let dataChannel = connection.createDataChannel("messenger");
 
     dataChannel.onerror = error => {
@@ -420,7 +327,6 @@ function onMessageArrived(message) {
   }
 
   const toggleConnectToPeer = userName => {
-    console.log("toggleConnection")
     if (connectedRef.current === userName) {
       setConnecting(true);
       setConnectedTo("");
@@ -435,8 +341,6 @@ function onMessageArrived(message) {
       setConnecting(false);
     }
   };
-
-  // const handleItemClick = (e, { name }) => setActiveItem(name)
 
   return (
     <div className="App">
@@ -471,8 +375,9 @@ function onMessageArrived(message) {
                 </Input>
                 </Form.Field>
                 <Form.Field>
-                <Label pointing="below"><a href="https://paymentpointers.org/" target="_blank" rel="noopener noreferrer">Payment Pointer</a> is your (optional) wallet address where you get paid when you chat</Label>
+                <Label pointing="below"><a href="https://paymentpointers.org/" target="_blank" rel="noopener noreferrer">Payment Pointer</a> is your (optional) wallet address where you get paid when you chat. Default is platform for testing.</Label>
                 <Input icon='dollar' iconPosition='left'
+                  value = {paymentPointer}
                   disabled={loggingIn}
                   type="text"
                   onChange={e => setPaymentPointer(e.target.value)}
@@ -520,6 +425,7 @@ function onMessageArrived(message) {
           Connecting to messaging service...
         </Loader>
       )}
+      {/* <MoneyViewer/> */}
     </div>
   );
 };
