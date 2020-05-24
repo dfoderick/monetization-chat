@@ -18,5 +18,4 @@ This project uses https://github.com/guidovizoso/react-monetize
 
 
 ## TODO
-1. Revenue sharing
-2. Show Monetization counter
+1. Show Monetization counter
