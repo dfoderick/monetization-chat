@@ -19,7 +19,7 @@ import UsersList from "./UsersList";
 import MessageBox from "./MessageBox";
 import Paho from "paho-mqtt"
 import MonetizationOff from './MonetizationOff'
-import MoneyViewer from "./MoneyViewer";
+//import MoneyViewer from "./MoneyViewer";
 
 const platformPointer = "$coil.xrptipbot.com/da75ae04-5c0c-4662-8ce6-5470a4127d97"
 // Use for local connections
@@ -33,7 +33,7 @@ const Chat = ({ connection, updateConnection, channel, updateChannel }) => {
   const [paymentPointer, setPaymentPointer] = useState(platformPointer);
   const [loggingIn, setLoggingIn] = useState(false);
   const [users, setUsers] = useState([]);
-  const [connectedTo, setConnectedTo] = useState("");
+  const [connectedTo, setConnectedTo] = useState("group");
   const [connecting, setConnecting] = useState(false);
   const [alert, setAlert] = useState(null);
   //const [activeItem, setActiveItem] = useState(null);
@@ -168,21 +168,25 @@ function onMessageArrived(message) {
   }
 
   //message received from user in channel
+  //group messages are also sent here
   const handleDataChannelMessageReceived = (data) => {
-    //todo: group messages are also sent here
-    if (!(data.recipient === me || data.sender === me)) return
     const message = data
     const sender = message.sender
     const recipient = message.recipient
-    const peer = (sender === me) ? recipient : sender
-    // list of conversations we have had
+    if (!(recipient === me || sender === me)
+    && recipient !== "group") return
+    const peer = (sender === me || recipient === "group") 
+    ? recipient 
+    : sender
     let conversations = messagesRef.current
     let peerMessages = conversations[peer]
+    console.log(peerMessages)
     if (peerMessages) {
       peerMessages = [...peerMessages, message]
       let newMessages = Object.assign({}, messages, { [peer]: peerMessages })
       messagesRef.current = newMessages
       setMessages(newMessages)
+      console.log(newMessages)
     } else {
       peerMessages = { [peer]: [message] }
       let newMessages = Object.assign({}, messages, peerMessages)
@@ -329,7 +333,7 @@ function onMessageArrived(message) {
   const toggleConnectToPeer = userName => {
     if (connectedRef.current === userName) {
       setConnecting(true);
-      setConnectedTo("");
+      setConnectedTo("group");
       payTo(platformPointer)
       connectedRef.current = "";
       setConnecting(false);
@@ -346,7 +350,9 @@ function onMessageArrived(message) {
     <div className="App">
       <div className="align-left">
         <Icon name="github">
+          <span style={{"margin":5}}>
           <a href="https://github.com/dfoderick/money-chat/" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </span>
         </Icon>
       </div>
       {alert}

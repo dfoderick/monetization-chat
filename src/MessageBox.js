@@ -27,7 +27,9 @@ const MessageBox = ({ messages, connectedTo, message, setMessage, sendMsg, me })
         <Card fluid>
           <Card.Content
             header={
-              !!connectedTo ? connectedTo : "Not chatting with anyone currently"
+              !!connectedTo && connectedTo !== "group" 
+              ? connectedTo 
+              : "In Group Chat mode payments are made to platform"
             }
           />
           <Card.Content>
@@ -43,7 +45,7 @@ const MessageBox = ({ messages, connectedTo, message, setMessage, sendMsg, me })
                           {formatRelative(new Date(time), new Date())}
                         </span>
                       </Comment.Metadata>
-                <Comment.Text>{text}</Comment.Text>
+                      <Comment.Text>{text}</Comment.Text>
                     </Comment.Content>
                   </Comment>
                 ))}

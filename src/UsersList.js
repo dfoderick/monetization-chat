@@ -38,7 +38,7 @@ class UsersList extends React.Component {
     const { users, toggleConnection, connectedTo, connecting } = this.props
     const platform = pointers[platformPointer]
     const platformAmount = platform ? platform.toFixed(9) : 0
-    //console.log(pointers)
+    const isGroup = connectedTo === "group"
     return (
     <Grid.Column width={5}>
       Platform ${platformAmount}
@@ -58,7 +58,7 @@ class UsersList extends React.Component {
                       onClick={() => {
                         toggleConnection(user.userName);
                       }}
-                      disabled={!!connectedTo && connectedTo !== user.userName}
+                      disabled={(!!connectedTo && !isGroup) && connectedTo !== user.userName}
                       loading={connectedTo === user.userName && connecting}
                     >
                       {connectedTo === user.userName ? "Disconnect" : "Connect"}
