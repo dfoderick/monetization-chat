@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/money-chat/static/css/main.23bdd892.chunk.css",
-    "main.js": "/money-chat/static/js/main.15ace871.chunk.js",
-    "main.js.map": "/money-chat/static/js/main.15ace871.chunk.js.map",
+    "main.css": "/money-chat/static/css/main.b7177e1d.chunk.css",
+    "main.js": "/money-chat/static/js/main.2276cdf4.chunk.js",
+    "main.js.map": "/money-chat/static/js/main.2276cdf4.chunk.js.map",
     "runtime-main.js": "/money-chat/static/js/runtime-main.b2ce6274.js",
     "runtime-main.js.map": "/money-chat/static/js/runtime-main.b2ce6274.js.map",
     "static/css/2.03492def.chunk.css": "/money-chat/static/css/2.03492def.chunk.css",
-    "static/js/2.32933ca0.chunk.js": "/money-chat/static/js/2.32933ca0.chunk.js",
-    "static/js/2.32933ca0.chunk.js.map": "/money-chat/static/js/2.32933ca0.chunk.js.map",
+    "static/js/2.570b4517.chunk.js": "/money-chat/static/js/2.570b4517.chunk.js",
+    "static/js/2.570b4517.chunk.js.map": "/money-chat/static/js/2.570b4517.chunk.js.map",
     "index.html": "/money-chat/index.html",
-    "precache-manifest.f096a20039b612ac5f63896596e80ab8.js": "/money-chat/precache-manifest.f096a20039b612ac5f63896596e80ab8.js",
+    "precache-manifest.fc6427066e9681e7359fb4913c9f4db9.js": "/money-chat/precache-manifest.fc6427066e9681e7359fb4913c9f4db9.js",
     "service-worker.js": "/money-chat/service-worker.js",
     "static/css/2.03492def.chunk.css.map": "/money-chat/static/css/2.03492def.chunk.css.map",
-    "static/css/main.23bdd892.chunk.css.map": "/money-chat/static/css/main.23bdd892.chunk.css.map",
-    "static/js/2.32933ca0.chunk.js.LICENSE.txt": "/money-chat/static/js/2.32933ca0.chunk.js.LICENSE.txt",
+    "static/css/main.b7177e1d.chunk.css.map": "/money-chat/static/css/main.b7177e1d.chunk.css.map",
+    "static/js/2.570b4517.chunk.js.LICENSE.txt": "/money-chat/static/js/2.570b4517.chunk.js.LICENSE.txt",
     "static/media/avatar.png": "/money-chat/static/media/avatar.315cf354.png",
     "static/media/semantic.min.css": "/money-chat/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.b2ce6274.js",
     "static/css/2.03492def.chunk.css",
-    "static/js/2.32933ca0.chunk.js",
-    "static/css/main.23bdd892.chunk.css",
-    "static/js/main.15ace871.chunk.js"
+    "static/js/2.570b4517.chunk.js",
+    "static/css/main.b7177e1d.chunk.css",
+    "static/js/main.2276cdf4.chunk.js"
   ]
 }

@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7c30e855467aa58af008b4b09c697743",
+    "revision": "cced01561409d3749268aa8d7db22444",
     "url": "/money-chat/index.html"
   },
   {
-    "revision": "60db0e5fb68ba7e54369",
+    "revision": "6685ff526073413495d2",
     "url": "/money-chat/static/css/2.03492def.chunk.css"
   },
   {
-    "revision": "69267f72ef57ce6b45de",
-    "url": "/money-chat/static/css/main.23bdd892.chunk.css"
+    "revision": "8ac7d582dbe12b8ecbda",
+    "url": "/money-chat/static/css/main.b7177e1d.chunk.css"
   },
   {
-    "revision": "60db0e5fb68ba7e54369",
-    "url": "/money-chat/static/js/2.32933ca0.chunk.js"
+    "revision": "6685ff526073413495d2",
+    "url": "/money-chat/static/js/2.570b4517.chunk.js"
   },
   {
     "revision": "4d47ffde3dc69784e8e23fd910817ef8",
-    "url": "/money-chat/static/js/2.32933ca0.chunk.js.LICENSE.txt"
+    "url": "/money-chat/static/js/2.570b4517.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "69267f72ef57ce6b45de",
-    "url": "/money-chat/static/js/main.15ace871.chunk.js"
+    "revision": "8ac7d582dbe12b8ecbda",
+    "url": "/money-chat/static/js/main.2276cdf4.chunk.js"
   },
   {
     "revision": "d0dccd3357bd0bba01ba",
